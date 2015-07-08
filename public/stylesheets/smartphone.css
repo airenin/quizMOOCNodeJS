@@ -1,0 +1,15 @@
+#page-wrap:after {
+  content: "Smatphone Layout";
+}
+
+h2 span, section h3 {
+  display: none;
+}
+
+body {
+  font-size: xx-large;
+}
+
+footer {
+  font-size: large;
+}
