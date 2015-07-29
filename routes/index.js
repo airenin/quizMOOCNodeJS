@@ -7,10 +7,14 @@ var controller = require('../controllers/quiz_controller');
 router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
-/* GEt qustion page */
-router.get('/quizes/question', controller.question);
+/* Autoload */
+router.param('quizId', controller.load);
+/* GET questions page */
+router.get('/quizes', controller.index);
+/* GET question page */
+router.get('/quizes/:quizId(\\d+)', controller.show);
 /* GET answer page */
-router.get('/quizes/answer', controller.answer);
+router.get('/quizes/:quizId(\\d+)/answer', controller.answer);
 /* GET author page */
 router.get('/author', controller.author);
 module.exports = router;

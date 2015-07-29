@@ -23,21 +23,25 @@ var sequelize = new Sequelize(DB_name, user, pwd,
   });
 
 // Importamos la definición de la tabla Quiz del archivo quiz.js
-var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
+var quiz_path = path.join(__dirname, 'quiz');
+var Quiz = sequelize.import(quiz_path);
 // Exportamos la definición de la tabla Quiz
 exports.Quiz = Quiz;
 
 // Si logramos sincronizar con la base de datos
 // Crea automáticamente el fichero quiz.sqlite
-sequelize.sync().success(function() {
+sequelize.sync().then(function() {
+  console.log('Sincronizado con base de datos');
   // Si funcina bien la función de contar filas
-  Quiz.count().success(function(count) {
+  Quiz.count().then(function(count) {
     // Si no hay elementos
     if (count === 0) {
+      console.log('Base de datos vacía');
       // Creamos un registro con la pregunta con la Capital de Italia
-      Quiz.create({pregunta: "Captital de Italia", respuesta: "Roma"})
+      Quiz.create({pregunta: "Captital de Italia", respuesta: "Roma"});
+      Quiz.create({pregunta: "Captital de Portugal", respuesta: "Lisboa"})
       // En caso de que funcione correctamente imprimimos un mensaje por consola
-      .success(function(){
+      .then(function() {
         console.log('Base de datos inicializadada');
       });
     }
