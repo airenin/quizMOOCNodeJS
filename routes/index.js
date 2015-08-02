@@ -1,24 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-var controller = require('../controllers/quiz_controller');
+var quizController = require('../controllers/quiz_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Quiz' });
+  res.render('index', {title: 'Quiz', errors:[]});
 });
 /* Autoload */
-router.param('quizId', controller.load);
+router.param('quizId', quizController.load);
 /* GET questions page */
-router.get('/quizes', controller.index);
+router.get('/quizes', quizController.index);
 /* GET question page */
-router.get('/quizes/:quizId(\\d+)', controller.show);
+router.get('/quizes/:quizId(\\d+)', quizController.show);
 /* GET answer page */
-router.get('/quizes/:quizId(\\d+)/answer', controller.answer);
+router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 /* GET author page */
-router.get('/author', controller.author);
+router.get('/author', quizController.author);
 /* GET new page */
-router.get('/quizes/new', controller.new);
+router.get('/quizes/new', quizController.new);
 /* POST create page */
-router.post('/quizes/create', controller.create);
+router.post('/quizes/create', quizController.create);
 module.exports = router;
