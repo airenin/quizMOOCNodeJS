@@ -7,6 +7,10 @@ module.exports = function(sequelize, DataTypes){
       respuesta: {
         type: DataTypes.STRING,
         validate: {notEmpty: {msg: "El campo respuesta no puede ser vacío"}}
+      },
+      tema:{
+        type: DataTypes.STRING,
+        validate: {notEmpty: {msg: "El campo tema no puede ser vacío"}}
       }
     });
 }

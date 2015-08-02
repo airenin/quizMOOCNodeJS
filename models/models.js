@@ -38,8 +38,8 @@ sequelize.sync().then(function() {
     if (count === 0) {
       console.log('Base de datos vacía');
       // Creamos un registro con la pregunta con la Capital de Italia
-      Quiz.create({pregunta: "Captital de Italia", respuesta: "Roma"});
-      Quiz.create({pregunta: "Captital de Portugal", respuesta: "Lisboa"})
+      Quiz.create({pregunta: "Captital de Italia", respuesta: "Roma", tema: "humanidades"});
+      Quiz.create({pregunta: "Captital de Portugal", respuesta: "Lisboa", tema: "humanidades"})
       // En caso de que funcione correctamente imprimimos un mensaje por consola
       .then(function() {
         console.log('Base de datos inicializadada');
