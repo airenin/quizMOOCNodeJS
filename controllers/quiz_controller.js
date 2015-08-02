@@ -14,7 +14,13 @@ exports.load = function(req, res, next, quizId) {
 };
 
 exports.index = function(req, res) {
-  models.Quiz.findAll().then(function(quizes) {
+  var where = {};
+  if (!!req.query.search) {
+    var search = '%' + req.query.search + '%';
+    search = search.replace(/ /g, '%');
+    where = {where: ["pregunta like ?", search]};
+  }
+  models.Quiz.findAll(where).then(function(quizes) {
     res.render('quizes/index.ejs', {quizes: quizes, errors: []});
   }).catch(function(error){
     next(error)
