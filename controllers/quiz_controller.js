@@ -64,6 +64,30 @@ exports.create = function(req, res) {
   });
 };
 
+exports.edit = function(req, res) {
+  var quiz = req.quiz; // autoload de quiz
+  res.render('quizes/edit', {quiz: quiz, errors: []});
+};
+// PUT /quizes/:id
+exports.update = function(req, res) {
+  req.quiz.pregunta = req.body.quiz.pregunta;
+  req.quiz.respuesta = req.body.quiz.respuesta;
+
+  req.quiz.validate().then(function(err) {
+    if (err) {
+      console.log(err.errors);
+      res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});
+    } else {
+      req.quiz.save({
+        fields: ["pregunta", "respuesta"]
+      }).then(function() {
+        console.log("Pregunta actualizada");
+        res.redirect('/quizes');
+      });
+    }
+  });
+};
+
 exports.author = function(req, res) {
   res.render('author', {errors: []});
 };
