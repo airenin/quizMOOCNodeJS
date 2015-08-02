@@ -30,6 +30,14 @@ header, nav, section{
 header {
   padding: 10px;
 }
+nav span{
+  margin: 0px 10px 0px 0px;
+}
+
+#ErrorsMsgs {
+  color: #f61;
+  font-size: smaller;
+}
 
 footer {
   background: white;
