@@ -25,8 +25,17 @@ var sequelize = new Sequelize(DB_name, user, pwd,
 // Importamos la definición de la tabla Quiz del archivo quiz.js
 var quiz_path = path.join(__dirname, 'quiz');
 var Quiz = sequelize.import(quiz_path);
+// Importamos la definición de la tabla Quiz del archivo quiz.js
+var comment_path = path.join(__dirname, 'comment');
+var Comment = sequelize.import(comment_path);
+// Fijamos las relaciones entre tablas
+// esto añadirá automáticamente una nueva colummna QuizId a Comment
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
 // Exportamos la definición de la tabla Quiz
 exports.Quiz = Quiz;
+// Exportamos la definición de la tabla Quiz
+exports.Comment = Comment;
 
 // Si logramos sincronizar con la base de datos
 // Crea automáticamente el fichero quiz.sqlite
@@ -36,7 +45,7 @@ sequelize.sync().then(function() {
   Quiz.count().then(function(count) {
     // Si no hay elementos
     if (count === 0) {
-      console.log('Base de datos vacía');
+      console.log('Base de datos vacia');
       // Creamos un registro con la pregunta con la Capital de Italia
       Quiz.create({pregunta: "Capital de Italia", respuesta: "Roma", tema: "humanidades"});
       Quiz.create({pregunta: "Capital de Portugal", respuesta: "Lisboa", tema: "humanidades"})
