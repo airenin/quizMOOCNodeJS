@@ -1,6 +1,7 @@
 var models = require('../models/models.js');
 
 exports.new = function(req, res) {
+  console.log('Redirigimos a la pantalla de nuevo comentario ');
   res.render('comments/new.ejs', {quizId: req.params.quizId, errors: []});
 };
 
