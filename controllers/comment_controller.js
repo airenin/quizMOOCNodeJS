@@ -1,4 +1,20 @@
 var models = require('../models/models.js');
+exports.load = function(req, res, next, commentId) {
+  models.Comment.find({
+    where: {
+      id: Number(commentId)
+    }
+  }).then(function(comment) {
+    if(comment) {
+      req.comment = comment;
+      next();
+    } else {
+      next(new Error('No existe el commentId: ' + commentId))
+    }
+  }).catch(function(error) {
+    next(error)
+  });
+};
 
 exports.new = function(req, res) {
   console.log('Redirigimos a la pantalla de nuevo comentario ');
@@ -20,6 +36,19 @@ exports.create = function(req, res) {
         res.redirect('/quizes/' + req.params.quizId);
       });
     }
+  }).catch(function(error) {
+    next(error);
+  });
+};
+
+exports.publish = function(req, res) {
+  console.log('Marcamos como publicado el comentario');
+  req.comment.publicado = true;
+  req.comment.save({
+    fields: ['publicado']
+  }).then(function() {
+    console.log('Puesto que se ha actualizado correctamente redirigimos');
+    res.redirect('/quizes/' + req.params.quizId);
   }).catch(function(error) {
     next(error);
   });
