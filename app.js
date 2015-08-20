@@ -40,6 +40,27 @@ app.use(function(req, res, next) {
     }
     // Make visible req.session
     res.locals.session = req.session;
+    // Check if app must logout
+    if (req.session.user) {
+      var maxTimeWithoutReq = 2*60;
+      var now = new Date().getTime();
+      console.log('Now: ' + now);
+      console.log('LastReqTime: ' + req.session.lastReqTime);
+      if (!req.session.lastReqTime) {
+        console.log('Fijamos el valor de req.session.lastReqTime')
+        req.session.lastReqTime = now;
+      }
+      var dif = (now - req.session.lastReqTime) /1000;
+      console.log('Han pasado ' + dif + ' s');
+      if (dif > maxTimeWithoutReq) {
+        console.log('Ha pasado demasiado tiempo, eliminamos el usuario');
+        delete req.session.lastReqTime;
+        delete req.session.user;
+      } else {
+        console.log('Actualizamos lastReqTime');
+        req.session.lastReqTime = now;
+      }
+    }
     next();
 });
 

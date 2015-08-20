@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 });
 /* Autoload */
 router.param('quizId', quizController.load);
-router.param('quizId', commentController.load);
+router.param('commentId', commentController.load);
 
 // Routes for session
 /* GET login form*/
